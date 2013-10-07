@@ -9,13 +9,11 @@ module ApplicationHelper
     end
   end
 
-  def link_to_add_repo(name, f, association)
-    new_object = f.object.send(association).klass.new
-    id = new_object.object_id
-    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+  def link_to_add_repo(name, f, association, values)
+    fields = f.fields_for(association, values, child_index: values.name) do |builder|
       render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(name, '#', class: "add_fields", data: { id: id, fields: fields.gsub("\n", "")})
+    link_to(name, '#', class: "add_repos", data: { id: values.name, fields: fields.gsub("\n", "")})
   end
 
 end

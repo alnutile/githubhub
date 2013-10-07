@@ -46,6 +46,8 @@ class IssueGroupsController < ApplicationController
   def create
     @issue_group = IssueGroup.new(params[:issue_group])
 
+    logger.info("Params #{params.inspect}")
+
     respond_to do |format|
       if @issue_group.save
         format.html { redirect_to @issue_group, notice: 'Issue group was successfully created.' }

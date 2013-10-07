@@ -1,44 +1,30 @@
-<div class="row">
-<%= form_for(@issue_group, :html => { :class => "form-horizontal" }) do |f| %>
-  <% if @issue_group.errors.any? %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <h4><%= pluralize(@issue_group.errors.count, "error") %> prohibited this issue_group from being saved:</h4>
+    <%= form_for(@issue_group, :html => { :class => "form-horizontal" }) do |f| %>
+      <%= render 'shared/errors', object: @issue_group %>
 
-      <ul>
-      <% @issue_group.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="form-group">
+        <%= f.label :title, :class => "col-lg-2 control-label" %>
+        <div class="col-lg-10">
+          <%= f.text_field :title, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :description, :class => "col-lg-2 control-label" %>
+        <div class="col-lg-10">
+          <%= f.text_area :description, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+          <%= f.submit :class => "btn btn-primary" %>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <%= f.label :title, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_field :title, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :description, :class => "col-lg-2 control-label" %>
-    <div class="col-lg-10">
-      <%= f.text_area :description, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit :class => "btn btn-primary" %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="span5">
     <h2>Repos related to this group</h2>
     <%= f.fields_for :repos do |builder| %>
         <%= render 'repo_fields', f: builder %>
     <% end %>
-  </div>
-  <div class="span5">
+    <div class="more-repos">&nbsp;</div>
+
     <h2>Choose what repos to relate to this Group</h2>
     <ol>
       <% @repos.list_all.each do |r|  %>
@@ -46,11 +32,14 @@
             <%= r.name %> </br>
             <%= r.description %> </br>
             <%= r.url %> </br>
-            <%= link_to_add_repo "Add Repo", f, :repos %> </br>
+            <%
+                values = Repo.new()
+                values.name = r.name
+                values.fullname = r.full_name
+                values.url = r.url
+            %>
+            <%= link_to_add_repo "Add Repo", f, :repos, values %> </br>
         </li>
     <% end %>
     </ol>
-  </div>
 <% end %>
-</div>
-
