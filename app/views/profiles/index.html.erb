@@ -1,0 +1,31 @@
+<h1 class="text-center">Manage Users</h1>
+<hr>
+<div class="well span11">
+  <%= link_to "Add User", new_profile_path %>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>ID</td>
+    <td>Email</td>
+    <td>Edit</td>
+    <td>Delete</td>
+  </tr>
+  </thead>
+  <% @users.each do |u| %>
+      <tr class="user-<%= u.id %>">
+        <td>
+          <%= u.id %>
+        </td>
+        <td>
+          <%= u.email %>
+        </td>
+        <td>
+          <%= link_to "edit", "/profiles/#{u.id}/edit", :class => "btn btn-info bnt-small" %>
+        </td>
+        <td>
+          <%= link_to 'Delete', "/profiles/#{u.id}", :method => :delete, :class => "btn btn-danger bnt-small user-#{u.id}", :confirm => 'Are you sure?' %>
+        </td>
+      </tr>
+  <% end %>
+</table>

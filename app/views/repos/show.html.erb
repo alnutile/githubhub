@@ -1,0 +1,23 @@
+<div class="page-header">
+  <%= link_to repos_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_repo_path(@repo), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show repo</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @repo.name %></dd>
+
+  <dt>Fullname:</dt>
+  <dd><%= @repo.fullname %></dd>
+
+  <dt>Url:</dt>
+  <dd><%= @repo.url %></dd>
+
+</dl>
